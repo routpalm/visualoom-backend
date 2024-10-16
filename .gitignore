@@ -1,0 +1,9 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+.idea/
+
+
+#react ignore files
+node_modules/
+package-lock.json
