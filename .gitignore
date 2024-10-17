@@ -7,3 +7,6 @@
 #react ignore files
 node_modules/
 package-lock.json
+
+#next ignore files
+.next
