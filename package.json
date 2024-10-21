@@ -8,10 +8,15 @@
     "heroku-postbuild": "npm run build"
   },
   "dependencies": {
+    "dotenv": "^16.4.5",
+    "express": "^4.21.1",
     "next": "^14.2.15",
+    "pg": "^8.13.0",
+    "pg-hstore": "^2.3.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-scripts": "^5.0.0",
+    "sequelize": "^6.37.4",
     "serve": "^13.0.2"
   },
   "browserslist": {
@@ -25,7 +30,7 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-},
+  },
   "engines": {
     "node": ">=18.17.x"
   }
