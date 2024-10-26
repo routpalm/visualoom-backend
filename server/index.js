@@ -6,7 +6,8 @@ const baseRoutes = require('./routes/baseRoutes');
 const helloWorldRoutes = require('./routes/helloWorldRoutes');
 
 const app = express();
-const port = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3000;
+// const port = process.env.PORT || 3001;
 
 app.use(express.json()); // Middleware to parse JSON
 
@@ -26,4 +27,4 @@ sequelize.sync()
     .catch(err => console.error('Unable to sync database:', err));
 
 // Start server
-app.listen(port, () => console.log(`Server started on port ${port}`));
+app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
