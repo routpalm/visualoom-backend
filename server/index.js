@@ -6,7 +6,7 @@ const baseRoutes = require('./routes/baseRoutes');
 const helloWorldRoutes = require('./routes/helloWorldRoutes');
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 3001;
 // const port = process.env.PORT || 3001;
 
 app.use(express.json()); // Middleware to parse JSON
