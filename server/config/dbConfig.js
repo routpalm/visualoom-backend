@@ -3,29 +3,20 @@
 require('dotenv').config({ path: './config/config.env' });
 
 
+// Generates config dynamically based on environment
+//   - PROD: heroku requires SSL
+//   - DEV : local postgres does not support SSL
 const dbConfig = () => {
-    if (process.env.NODE_ENV === 'development') {
-        return {
-            dialect: 'postgres',
-            username: process.env.DB_USERNAME,
-            password: process.env.DB_PASSWORD,
-            database: process.env.DB_NAME,
-            host: process.env.DB_HOST,
-            port: Number(process.env.DB_PORT),
-        };
-    } else {
-        return {
-            url: process.env.DATABASE_URL,
-            dialect: 'postgres',
-            protocol: 'postgres',
-            dialectOptions: {
-                ssl: {
-                    require: true,
-                    rejectUnauthorized: false,
-                },
-            },
-        };
-    }
+    const isProduction = process.env.NODE_ENV === 'production';
+
+    return {
+        dialect: 'postgres',
+        protocol: 'postgres',
+        url: process.env.DATABASE_URL,
+        dialectOptions: {
+            ssl: isProduction ? { rejectUnauthorized: false } : false // Enable SSL for production
+        }
+    };
 };
 
 module.exports = dbConfig;

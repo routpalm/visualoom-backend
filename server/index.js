@@ -18,7 +18,6 @@ app.use(express.json());
 app.use('/', baseRoutes);
 app.use('/helloworld', helloWorldRoutes);
 
-
 // Test connection to database
 sequelize.authenticate()
     .then(() => console.log('Database connected...'))
