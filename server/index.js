@@ -6,6 +6,7 @@ const { sequelize } = require('./models');
 // Import routes
 const baseRoutes = require('./routes/baseRoutes');
 const helloWorldRoutes = require('./routes/helloWorldRoutes');
+const apiRoutes = require('./routes/apiRoutes');
 
 // Init Express
 const app = express();
@@ -17,6 +18,7 @@ app.use(express.json());
 // Use the routes
 app.use('/', baseRoutes);
 app.use('/helloworld', helloWorldRoutes);
+app.use('/api', apiRoutes);
 
 // Test connection to database
 sequelize.authenticate()
