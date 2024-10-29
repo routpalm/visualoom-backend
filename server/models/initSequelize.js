@@ -1,4 +1,4 @@
-// models/database.js
+// models/initSequelize.js
 
 // Imports
 const { Sequelize } = require('sequelize');

@@ -1,3 +1,5 @@
+// ./models/HelloWorld.js
+
 const { Model, DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {
@@ -12,13 +14,13 @@ module.exports = (sequelize) => {
             },
             message: {
                 type: DataTypes.STRING,
-                allowNull: false // ensures messages are not empty
+                allowNull: false // Messages should not be empty
             }
         },
         {
             sequelize,
             modelName: "HelloWorld",
-            tableName: "HelloWorlds", // Explicitly specify the table name
+            tableName: "HelloWorlds", // Expliitly set the table name
         }
     );
 

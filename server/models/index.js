@@ -1,24 +1,17 @@
-// Set env when on DEV, otherwise PROD will use its own env
+// ./models/index.js
+
+// Load environment variables
 require('dotenv').config({ path: './../config/config.env' });
 
-// Import models
-const HelloWorld = require('./HelloWorld');
-const User = require('./UserModel');
-const Like = require('./LikeModel');
-
-// Initialize Sequelize
+// Import the sequelize instance
 const sequelize = require('./initSequelize');
 
-// Initialize models
-// const HelloWorld = HelloWorldModel(sequelize);
-// const User = UserModel(sequelize);
-// const Like = LikeModel(sequelize);
-
+// Import model definitions and initialize
 const models = {
-  User: User(sequelize),
-  Like: Like(sequelize),
-  HelloWorld: HelloWorld(sequelize),
-};
+  HelloWorld: HelloWorld = require('./HelloWorld')(sequelize),
+  User: User = require('./UserModel')(sequelize),
+  Like: Like = require('./LikeModel')(sequelize),
+}
 
 // Define relationships
 Object.values(models).forEach((model) => {
@@ -27,10 +20,8 @@ Object.values(models).forEach((model) => {
   }
 });
 
-// Export the Sequelize instance and models
-  module.exports = {
-    sequelize,
-    HelloWorld,
-    User,
-    Like
-  };
+// Export the Sequelize and model instances
+module.exports = {
+  sequelize,
+  ...models
+};
