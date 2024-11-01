@@ -17,13 +17,6 @@ const authRoutes = require('./routes/authRoutes');
 const app = express();
 const PORT = process.env.PORT || 3001;
 
-// middleware for session management
-app.use(session({
-    secret: process.env.SESSION_SECRET,
-    resave: false,
-    saveUninitialized: true,
-  }));
-
 // initialize passport and manage sessions
 app.use(passport.initialize());
 app.use(passport.session());
