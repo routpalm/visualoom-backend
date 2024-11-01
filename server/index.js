@@ -1,3 +1,5 @@
+require('dotenv').config({ path: './config/config.env' });
+
 const express = require('express');
 
 // Init and import Sequelize instance

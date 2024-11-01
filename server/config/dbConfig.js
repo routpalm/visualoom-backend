@@ -1,7 +1,5 @@
 // ./server/config/dbConfig.js
 
-require('dotenv').config({ path: './config/config.env' });
-
 
 // Generates config dynamically based on environment
 //   - PROD: heroku requires SSL
