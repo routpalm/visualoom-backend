@@ -1,4 +1,8 @@
 const express = require('express');
+const session = require('express-session');
+const passport = require('passport');
+require('./config/passportConfig');  // import passport config
+require('dotenv').config();
 
 // Init and import Sequelize instance
 const { sequelize } = require('./models');
@@ -6,11 +10,24 @@ const { sequelize } = require('./models');
 // Import routes
 const baseRoutes = require('./routes/baseRoutes');
 const helloWorldRoutes = require('./routes/helloWorldRoutes');
+const authRoutes = require('./routes/authRoutes');
 // const apiRoutes = require('./routes/apiRoutes');
 
 // Init Express
 const app = express();
 const PORT = process.env.PORT || 3001;
+
+// middleware for session management
+app.use(session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: true,
+  }));
+
+// initialize passport and manage sessions
+app.use(passport.initialize());
+app.use(passport.session());
+
 
 // Middleware to parse JSON
 app.use(express.json());
@@ -18,7 +35,9 @@ app.use(express.json());
 // Use the routes
 app.use('/', baseRoutes);
 app.use('/helloworld', helloWorldRoutes);
+app.use(authRoutes);
 // app.use('/api', apiRoutes);
+
 
 // Test connection to database
 sequelize.authenticate()
