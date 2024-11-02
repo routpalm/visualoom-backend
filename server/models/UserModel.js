@@ -1,3 +1,6 @@
+// ./server/models/UserModel.js
+
+
 const { Model, DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {

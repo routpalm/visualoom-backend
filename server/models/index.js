@@ -1,7 +1,5 @@
 // ./models/index.js
 
-// Load environment variables
-// require('dotenv').config({ path: './../config/config.env' });
 
 // Import the sequelize instance
 const sequelize = require('./initSequelize');

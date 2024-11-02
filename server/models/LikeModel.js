@@ -1,3 +1,6 @@
+// ./server/models/LikeModel.js
+
+
 const { Model, DataTypes } = require('sequelize');
 
 module.exports = (sequelize) => {

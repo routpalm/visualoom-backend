@@ -1,3 +1,6 @@
+// ./server/controllers/authController.js
+
+
 const passport = require('passport');
 const jwt = require("jsonwebtoken");
 const JWT_SECRET = process.env.JWT_SECRET;

@@ -1,3 +1,6 @@
+// ./server/config/passportConfig.js
+
+
 // passport required for authentication
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;

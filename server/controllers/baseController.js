@@ -1,5 +1,6 @@
 // ./server/controllers/baseController.js
 
+
 exports.getBaseResponse = (req, res) => {
     console.log('Base route accessed');
     res.send("Hello World!");

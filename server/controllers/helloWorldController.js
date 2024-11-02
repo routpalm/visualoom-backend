@@ -1,3 +1,6 @@
+// ./server/controllers/helloWorldController.js
+
+
 const { HelloWorld } = require('../models');
 
 // Controller for handling GET request
