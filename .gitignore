@@ -2,7 +2,7 @@
 /shelf/
 /workspace.xml
 .idea/
-
+.env
 
 #react ignore files
 node_modules/
