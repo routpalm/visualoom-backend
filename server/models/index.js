@@ -2,7 +2,7 @@
 
 
 // Import the sequelize instance
-const sequelize = require('./initSequelize');
+const sequelize = require('../config/setupSequelize');
 
 // Import model definitions and initialize
 const models = {
