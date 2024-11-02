@@ -5,11 +5,11 @@ const passport = require('passport');
 const jwt = require("jsonwebtoken");
 const JWT_SECRET = process.env.JWT_SECRET;
 
-exports.googleLogin = (req, res, next) => {
+exports.loginWithGoogle = (req, res, next) => {
     passport.authenticate('google', { scope: ['profile', 'email'] })(req, res, next);
 }
 
-exports.googleCallback = (req, res) => {
+exports.handleGoogleCallback = (req, res) => {
     // after successful verification, generate JWT
     const user = req.user;  // we are assuming user info is available
 
@@ -24,6 +24,15 @@ exports.googleCallback = (req, res) => {
     res.json({ token });
 }
 
-exports.googleLogout = (req, res) => {
-    req.logout();
+exports.authenticateGoogleResponse = (req, res, next) => {
+    passport.authenticate('google', { failureRedirect: '/' })(req, res, next);
+}
+
+exports.logoutFromGoogle = (req, res, next) => {
+    req.logout((err) => {
+        if (err) {
+            return next(err);
+        }
+        res.redirect('/');
+    });
 }
