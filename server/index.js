@@ -1,10 +1,9 @@
 require('dotenv').config({ path: './config/config.env' });
-
 const express = require('express');
 const session = require('express-session');
 const passport = require('passport');
 require('./config/passportConfig');  // import passport config
-require('dotenv').config();
+
 
 // Init and import Sequelize instance
 const { sequelize } = require('./models');
@@ -20,6 +19,17 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 // initialize passport and manage sessions
+app.use(session(
+    {
+        secret: 'test_key_do_not_use_in_production',
+        resave: false,
+        saveUninitialized: false,
+        cookie: {
+            secure: false
+        }
+    }
+));
+
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -30,7 +40,7 @@ app.use(express.json());
 // Use the routes
 app.use('/', baseRoutes);
 app.use('/helloworld', helloWorldRoutes);
-app.use(authRoutes);
+app.use('/auth', authRoutes);
 // app.use('/api', apiRoutes);
 
 

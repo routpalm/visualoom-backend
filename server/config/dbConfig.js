@@ -1,6 +1,5 @@
 // ./server/config/dbConfig.js
 
-
 // Generates config dynamically based on environment
 //   - PROD: heroku requires SSL
 //   - DEV : local postgres does not support SSL
