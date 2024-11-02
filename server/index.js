@@ -3,6 +3,7 @@ const express = require('express');
 const session = require('express-session');
 const passport = require('passport');
 require('./config/passportConfig');  // import passport config
+const sessionConfig = require('./config/sessionConfig')();
 
 
 // Init and import Sequelize instance
@@ -19,16 +20,7 @@ const app = express();
 const PORT = process.env.PORT || 3001;
 
 // initialize passport and manage sessions
-app.use(session(
-    {
-        secret: 'test_key_do_not_use_in_production',
-        resave: false,
-        saveUninitialized: false,
-        cookie: {
-            secure: false
-        }
-    }
-));
+app.use(session(sessionConfig));
 
 app.use(passport.initialize());
 app.use(passport.session());
