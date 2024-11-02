@@ -2,17 +2,14 @@
 
 // Imports
 const { Sequelize } = require('sequelize');
-const dbConfig = require('../config/dbConfig');
-
-// Get sequelize config
-const config = dbConfig();
+const dbConfig = require('../config/dbConfig')();
 
 // Initialize sequelize
-const sequelize = new Sequelize(config.url,
+const sequelize = new Sequelize(dbConfig.url,
         {
-            dialect: config.dialect,
-            protocol: config.protocol,
-            dialectOptions: config.dialectOptions,
+            dialect: dbConfig.dialect,
+            protocol: dbConfig.protocol,
+            dialectOptions: dbConfig.dialectOptions,
         });
 
 module.exports = sequelize;
