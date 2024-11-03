@@ -2,7 +2,7 @@
 
 const baseRoutes = require('../routes/baseRoutes');
 const helloWorldRoutes = require('../routes/helloWorldRoutes');
-const authRoutes = require('../routes/authRoutes');
+const authRoutes = require('../auth/authRoutes');
 
 
 function setupRoutes(app) {
