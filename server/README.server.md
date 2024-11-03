@@ -38,33 +38,19 @@ class project for UOCS 422
 # Usage
 
 - create ./config/config.env
-- currently only using ```DB_DEV_*``` entries
 ```
 # ./config/config.env
 
-DB_DEV_USERNAME=your-username
-DB_DEV_PASSWORD=your-password
-DB_DEV_NAME=your-database-name
-DB_DEV_HOST=127.0.0.1
-DB_DEV_PORT=5432
+NODE_ENV=development
 
-DB_TEST_USERNAME=your-username
-DB_TEST_PASSWORD=your-password
-DB_TEST_NAME=your-database-name
-DB_TEST_HOST=127.0.0.1
-DB_TEST_PORT=5432
+DATABASE_URL=postgresql://username:password@host:port/dbname
 
-DB_PROD_USERNAME=your-username
-DB_PROD_PASSWORD=your-password
-DB_PROD_NAME=your-database-name
-DB_PROD_HOST=127.0.0.1
-DB_PROD_PORT=5432
 ```
 - Default values
   - Default username is ```postgres```
   - Default database name is ```postgres```
+  - Default host is ```localhost```
   - Default port is ```5432```
-
 - run ./index.js
 - verify backend is running by visiting ```localhost:3001```
 
