@@ -7,7 +7,7 @@ const authRoutes = require('../auth/authRoutes');
 
 function setupRoutes(app) {
     app.use('/', baseRoutes);
-    app.use('/helloworld', helloWorldRoutes);
+    app.use('/helloworlds', helloWorldRoutes);
     app.use('/auth', authRoutes);
     // app.use('/api', apiRoutes);
 }

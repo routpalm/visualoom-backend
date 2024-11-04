@@ -2,10 +2,21 @@ const express = require('express');
 const router = express.Router();
 const helloWorldController = require('../controllers/helloWorldController');
 
-// Define the GET route
+
+// GET HelloWorld objects filtered by parameters
 router.get('/', helloWorldController.getHelloWorld);
 
-// Define the POST route (if needed)
+// GET HelloWorld by id
+router.get('/:id', helloWorldController.getHelloWorldById);
+
+// POST new HelloWorld
 router.post('/', helloWorldController.createHelloWorld);
+
+// PUT data into existing HelloWorld
+router.put('/:id', helloWorldController.modifyHelloWorld);
+
+// DELETE existing HelloWorld
+router.delete('/:id', helloWorldController.deleteHelloWorld)
+
 
 module.exports = router;
