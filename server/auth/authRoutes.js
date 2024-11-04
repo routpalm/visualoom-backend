@@ -2,10 +2,11 @@
 
 const express = require('express');
 const router = express.Router();
-const authController = require('../controllers/authController');
+const authController = require('./authController');
 
 
 // Redirect user to google login
+// TODO: Consider renaming to /google/connect as this will handle login and signup
 router.get('/google/login',
     authController.loginWithGoogle);
 
@@ -20,5 +21,6 @@ router.get('/google/callback',
 // TODO: Add error handling to logout
 router.get('/google/logout',
     authController.logoutFromGoogle);
+
 
 module.exports = router;
