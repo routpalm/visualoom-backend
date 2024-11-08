@@ -15,13 +15,13 @@ module.exports = (sequelize) => {
             },
             message: {
                 type: DataTypes.STRING,
-                allowNull: false // Messages should not be empty
+                allowNull: false        // Messages should not be empty
             }
         },
         {
             sequelize,
             modelName: "HelloWorld",
-            tableName: "HelloWorlds", // Expliitly set the table name
+            tableName: "HelloWorlds",   // Explicitly set the table name
         }
     );
 
