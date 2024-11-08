@@ -6,5 +6,5 @@ const authRoutes = require('./authRoutes');
 
 module.exports = {
     initializePassport,
-    authRoutes,
+    authRoutes
 };
