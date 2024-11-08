@@ -9,6 +9,7 @@ const express = require('express');
 const app = express();
 const PORT = process.env.PORT || 3001;
 
+
 // Set up and configure components
 const sequelize = require('./config/setupSequelize');
 const setupExpress = require('./config/setupExpress');

@@ -9,7 +9,9 @@ const sessionConfig = require("./sessionConfig")();
 function setupExpress(app) {
     app.use(express.json());
     app.use(session(sessionConfig));
-    app.use(cors());
+    app.use(cors({
+        credentials: true
+    }));
 }
 
 module.exports = setupExpress;
