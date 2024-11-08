@@ -3,10 +3,10 @@
 const express = require('express');
 const router = express.Router();
 const jwt = require("jsonwebtoken");
-const { OAuth2Client } = require('google-auth-library');
 const authController = require('./authController');
 
 // Google OAuth2 Client
+const { OAuth2Client } = require('google-auth-library');
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 // Redirect user to google login
@@ -25,6 +25,7 @@ router.get('/google/callback',
 // TODO: Add error handling to logout
 router.get('/google/logout',
     authController.logoutFromGoogle);
+
 
 // POST /oauth2
 router.post('/oauth2', async (req, res) => {
