@@ -10,19 +10,7 @@ exports.loginWithGoogle = (req, res, next) => {
 }
 
 exports.handleGoogleCallback = async (req, res) => {
-    const googleUser = req.user; // Obtained from Google profile through passport
-    let user = await User.findOne({ where: { googleId: googleUser.id } });
-
-    // Check if user already exists
-    if (!user) {
-        // If user doesn't exist, create a new one
-        user = await User.create({
-            googleId: googleUser.id,
-            email: googleUser.emails[0].value,
-            name: googleUser.displayName,
-            // Other fields as needed
-        });
-    }
+    const user = req.user; // Obtained from the serialized user in googleAuthStrategy
 
     // Generate JWT for the user (existing or new)
     const token = jwt.sign(

@@ -1,7 +1,6 @@
 // ./server/config/passportConfig.js
 
-const GoogleStrategy = require('passport-google-oauth20').Strategy;
-
+const { User } = require('../models'); // Import from index.js instead
 
 const googleStrategyConfig = () => {
   return {
@@ -11,11 +10,23 @@ const googleStrategyConfig = () => {
   };
 };
 
-function googleAuthStrategy(accessToken, refreshToken, profile, done) {
-  // Create new user?
-  // save profile.id, looking up the user, etc. here (database stuff)
-  return done(null, profile);
+async function googleAuthStrategy(accessToken, refreshToken, profile, done) {
+
+  try {
+    const user = await User.findOne({ where: { googleId: profile.id } });
+    if (user) {
+      return done(null, user);
+    }
+    const newUser = await User.create({
+      googleId: profile.id,
+      email: profile.emails[0].value,
+      name: profile.displayName,
+    });
+    done(null, newUser);
+  } catch (err) {
+    done(err);
+  }
 }
 
 
-module.exports = { googleStrategyConfig, googleAuthStrategy }
+module.exports = { googleStrategyConfig, googleAuthStrategy };
