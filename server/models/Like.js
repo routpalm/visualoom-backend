@@ -39,12 +39,13 @@ module.exports = (sequelize) => {
     );
 
     Like.associate = (models) => {
+
         Like.belongsTo(models.User,
             {
                 foreignKey: 'userId',   // ensures consistent foreign key naming
                 as: 'user'              // alias for easier reference
             });
-        // TODO: Implement Artwork model first
+
         Like.belongsTo(models.Artwork,
             {
                 foreignKey: 'artworkId', // ensures consistent foreign key naming
