@@ -6,6 +6,7 @@ const {OAuth2Client} = require("google-auth-library");
 const JWT_SECRET = process.env.JWT_SECRET;
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
+// TODO: Save new users
 
 exports.verifyOauth2Token = async (req, res) => {
     const {idToken} = req.body;
@@ -48,6 +49,8 @@ exports.verifyJWT = (req, res, next) => {
         if (err) {
             return res.status(403).json({ message: 'Unauthorized: Invalid token' });
         }
+        // TODO: Discard the log statement when we're done with it
+        console.log(decoded)
         req.user = decoded;  // attaching the decoded user info to the request
         next();
     });

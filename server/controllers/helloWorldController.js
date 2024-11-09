@@ -1,7 +1,8 @@
 // ./server/controllers/helloWorldController.js
 
+
 const { HelloWorld } = require('../models');
-const req = require("express/lib/request");
+
 
 // Controller for handling GET request
 exports.getHelloWorld = async (req, res) => {
@@ -116,4 +117,3 @@ exports.deleteHelloWorld = async (req, res) => {
         res.status(500).json({ message: 'Internal server error' });
     }
 };
-
