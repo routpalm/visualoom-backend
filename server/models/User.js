@@ -31,7 +31,7 @@ module.exports = (sequelize) => {
         {
             sequelize,
             modelName: "User",
-            tableName: "Users", // Ensure this matches your database table
+            tableName: "Users", // Ensure this matches the database table
             timestamps: true
         }
     );
@@ -47,5 +47,5 @@ module.exports = (sequelize) => {
         })
     }
 
-    return User; // Make sure you're returning the model
+    return User; // return the model for export
 };
