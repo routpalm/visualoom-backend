@@ -9,7 +9,7 @@ const models = {
   Artwork: Artwork = require('./Artwork')(sequelize),
   HelloWorld: HelloWorld = require('./HelloWorld')(sequelize),
   Like: Like = require('./Like')(sequelize),
-  Params: Params = require('./Params')(sequelize),
+  // Params: Params = require('./Params')(sequelize),
   User: User = require('./User')(sequelize)
 }
 
