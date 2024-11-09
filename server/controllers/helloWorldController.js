@@ -41,7 +41,7 @@ exports.getHelloWorldById = async (req, res) => {
 
         const id = req.params.id;
 
-        const hello = await HelloWorld.findOne( { where: { id } } );
+        const hello = await HelloWorld.findByPk(id);
 
         if (hello) {
             res.status(200).json({

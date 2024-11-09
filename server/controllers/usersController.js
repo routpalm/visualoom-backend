@@ -2,8 +2,6 @@
 
 
 const { User, Artwork, Like } = require('../models');
-const req = require("express/lib/request");
-const res = require("express/lib/response");
 
 // TODO: verifyJWT attaches req.user for use in succeeding controllers
 
