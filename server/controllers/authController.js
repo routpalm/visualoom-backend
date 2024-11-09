@@ -1,14 +1,13 @@
 // ./server/controllers/authController.js
 
 
-// const passport = require('passport');
 const jwt = require("jsonwebtoken");
 const {OAuth2Client} = require("google-auth-library");
 const JWT_SECRET = process.env.JWT_SECRET;
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
 
-exports.verifyOauth2Token = async (req, res, next) => {
+exports.verifyOauth2Token = async (req, res) => {
     const {idToken} = req.body;
     console.log(req.body);
 

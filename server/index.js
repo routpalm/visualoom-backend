@@ -13,11 +13,9 @@ const PORT = process.env.PORT || 3001;
 // Set up and configure components
 const sequelize = require('./config/setupSequelize');
 const setupExpress = require('./config/setupExpress');
-const { initializePassport} = require('./auth');
 const setupRoutes = require('./config/setupRoutes');
 
 setupExpress(app);
-initializePassport(app);
 setupRoutes(app);
 
 // Start server

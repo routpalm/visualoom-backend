@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const helloWorldController = require('../controllers/helloWorldController');
-const { verifyJWT } = require('../auth/authController');
+const { verifyJWT } = require('../controllers/authController');
 
 
 // GET HelloWorld objects filtered by parameters
