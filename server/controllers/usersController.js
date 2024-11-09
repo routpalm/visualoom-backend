@@ -21,7 +21,7 @@ exports.getUserById = async (req, res) => {
     try {
         const { id } = req.params;
 
-        const user = await User.findOne({where: {id}})
+        const user = await User.findByPk(id)
 
         if (user) {
             res.status(200).json(user);
