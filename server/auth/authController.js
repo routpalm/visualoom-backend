@@ -1,39 +1,40 @@
 // ./server/controllers/authController.js
 
 
-const passport = require('passport');
+// const passport = require('passport');
 const jwt = require("jsonwebtoken");
+const {OAuth2Client} = require("google-auth-library");
 const JWT_SECRET = process.env.JWT_SECRET;
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 
-exports.loginWithGoogle = (req, res, next) => {
-    passport.authenticate('google', { scope: ['profile', 'email'] })(req, res, next);
-}
 
-exports.handleGoogleCallback = async (req, res) => {
-    const user = req.user; // Obtained from the serialized user in googleAuthStrategy
+exports.verifyOauth2Token = async (req, res, next) => {
+    const {idToken} = req.body;
+    console.log(req.body);
 
-    // Generate JWT for the user (existing or new)
-    const token = jwt.sign(
-        { id: user.id, email: user.email },
-        JWT_SECRET,
-        { expiresIn: '1h' }
-    );
+    if (!idToken) {
+        return res.status(400).json({error: 'ID token is required'});
+    }
 
-    // Send the token to the frontend
-    res.json({ token });
-};
+    try {
+        // Verify the ID token
+        const ticket = await client.verifyIdToken({
+            idToken,
+            audience: process.env.GOOGLE_CLIENT_ID, // Replace with your Google Client ID
+        });
 
-exports.authenticateGoogleResponse = (req, res, next) => {
-    passport.authenticate('google', { failureRedirect: '/' })(req, res, next);
-}
+        const payload = ticket.getPayload();
+        const userId = payload['sub']; // Google user ID
 
-exports.logoutFromGoogle = (req, res, next) => {
-    req.logout((err) => {
-        if (err) {
-            return next(err);
-        }
-        res.redirect('/');
-    });
+        // Generate a JWT for the user
+        const token = jwt.sign({userId, email: payload.email}, process.env.JWT_SECRET, {
+            expiresIn: '1h',
+        });
+
+        res.json({token});
+    } catch (error) {
+        res.status(401).json({error: 'Invalid ID token'});
+    }
 }
 
 exports.verifyJWT = (req, res, next) => {
