@@ -13,7 +13,15 @@ module.exports = (sequelize) => {
             type: DataTypes.INTEGER,
             autoIncrement: true,
             primaryKey: true
-        }
+        }//,
+        // paramsId: {
+        //     type: DataTypes.INTEGER,
+        //     allowNull: false,           // artwork instances must contain params to generate an image
+        //     references: {
+        //         model: "Params",
+        //         key: "id"               // foreign key in 'params' table
+        //     }
+        //}
     },
         {
         sequelize,
@@ -28,9 +36,13 @@ module.exports = (sequelize) => {
             foreignKey: 'userId',
             as: 'user'
         })
-        Artwork.hasOne(models.Params, {
-            foreignKey: 'paramId',
-            as: 'params'
+        // Artwork.hasOne(models.Params, {
+        //     foreignKey: 'paramsId',
+        //     as: 'params'
+        // })
+        Artwork.hasMany(models.Like, {
+            foreignKey: 'artworkId',
+            as: 'like'
         })
     }
 
