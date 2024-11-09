@@ -31,19 +31,19 @@ module.exports = (sequelize) => {
         {
             sequelize,
             modelName: "User",
-            tableName: "Users", // Ensure this matches the database table
+            tableName: "Users", // make sure this matches the database table
             timestamps: true
         }
     );
 
     User.associate = (models) => {
         User.hasMany(models.Artwork, {
-            foreignKey: 'artworkId',
-            as: 'artwork'
+            foreignKey: 'userId',
+            as: 'artworks'
         })
         User.hasMany(models.Like, {
-            foreignKey: 'likeId',
-            as: 'like'
+            foreignKey: 'userId',
+            as: 'likes'
         })
     }
 
