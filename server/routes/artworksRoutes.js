@@ -8,7 +8,7 @@ const artworksController = require('../controllers/artworksController');
 // GET
 router.get('/', artworksController.getAllArtworks)
 router.get('/:id', artworksController.getArtworkById)
-router.get('/:id/artist', artworksController.getArtworkUser)
+router.get('/:id/user', artworksController.getArtworkUser)
 // router.get('/:id/params', artworksController.getArtworkParams)
 router.get('/:id', artworksController.getArtworkLikes)
 
