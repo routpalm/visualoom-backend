@@ -1,15 +1,20 @@
-# brickjong
-class project for UOCS 422
+# Visualoom - backend
+
+Development documentation for UO CS-422 class project.
 
 ## Table of Contents
 - [Environment](#environment)
   - [Steps to Reproduce](#steps-to-reproduce)
   - [Local PostgreSQL Setup](#for-local-postgresql)
 - [Usage](#usage)
+  - [Note on Express Ports](#note-on-express-ports)
   - [Hello World (PostgreSQL)](#hello-world-postgresql)
-  - [Hello World (test endpoint)](#hello-world-test-endpoint)
+  - [Hello World (Using Browser)](#hello-world-using-browser)
+  - [Hello World (Using CURL)](#hello-world-using-curl)
 - [Endpoints](#endpoints)
-    - [A note about protected endpoints]() 
+  - [A Note About Protected Endpoints](#a-note-about-protected-endpoints)
+  - [Example: React fetch Request](#1-example-react-fetch)
+  - [Example: curl Request](#2-example-curl)
     - [/helloworlds](#helloworlds)
     - [/helloworlds/protected](#helloworldsprotected)
     - [/users](#users)
@@ -70,9 +75,15 @@ DATABASE_URL=postgresql://username:password@host:port/dbname
   - Details can be found in pgAdmin 4 by selecting your server and naviagting to the "properties" tab.
   - If you are connected to a server in SQL Shell, you can use the command ```\conninfo```
 - run ./index.js
-- verify backend is running by visiting ```localhost:port```
+- verify Express is listening by visiting ```localhost:3001```
 
 # Usage
+
+#### Note on Express ports:
+
+the port for Express defaults to `3001`, but this can be changed by adding a `PORT=<port_number>` entry to the
+config.env file.
+
 
 ## Hello World (postgresQL)
 
@@ -86,48 +97,159 @@ VALUES ('Hello World!', CURRENT_TIMESTAMP, CURRENT_TIMESTAMP);
 SELECT * FROM "HelloWorlds"
 ```
 
-- Or, in your browser, visit ```http://localhost:3001/helloworld```
-- Or, from the command line run
 
-```
-curl http://localhost:3001/helloworld
-```
+## Hello World (using browser)
 
-N.B. that sequelize automatically pluralizes the table, i.e. "HelloWorlds" instead of "HelloWorld"
+- The default Express port is `3001`
+- If you changed the Express port with `PORT=<PORT_VALUE>` in `./config/config.env`, use that value instead.
+- In your browser, visit ```http://localhost:3001/helloworlds```
 
-## Hello World (test endpoint)
 
-### 1. GET `/helloworlds`  
-  Retrieves the most recent HelloWorld message  
-  - Example:  
-  ```curl http://localhost:3001/helloworlds```
-  - Response:  
-  ```{ "message": "Hello World!" }```
-### 2. POST /helloworld
-  Creates a new HelloWorld message
-  - Example:  
-  ```curl -X POST http://localhost:3001/helloworlds -H "Content-Type: application/json" -d '{"message": "Hello from cURL!"}'```
-  - Response:
+---
+
+## Hello World (using CURL)
+
+- From the command line, run
+
+    ```bash
+    curl http://localhost:3001/helloworlds
+    ```
+
+**Note**: Sequelize automatically pluralizes the table, hence "HelloWorlds" instead of "HelloWorld."
+
+### 1. GET `/helloworlds`
+Retrieves the most recent HelloWorld message.
+
+- Example:
+  ```bash
+  curl http://localhost:3001/helloworlds
   ```
-{
-    "id": 1,
-    "message": "Hello from cURL!",
-    "createdAt": "2024-10-20T04:07:30.111Z",
-    "updatedAt": "2024-10-20T04:07:30.111Z"
-}
-```
+
+- Response:
+  ```json
+  {
+    "message": "Hello World!"
+  }
+  ```
+
+### 2. POST `/helloworlds`
+Creates a new HelloWorld message.
+
+- Example:
+  ```bash
+  curl -X POST http://localhost:3001/helloworlds -H "Content-Type: application/json" -d '{"message": "Hello from cURL!"}'
+  ```
+
+- Response:
+  ```json
+  {
+      "id": 1,
+      "message": "Hello from cURL!",
+      "createdAt": "2024-10-20T04:07:30.111Z",
+      "updatedAt": "2024-10-20T04:07:30.111Z"
+  }
+  ```
+
+### 3. PUT `/helloworlds/:id`
+Updates an existing HelloWorld message by ID.
+
+- Example:
+  ```bash
+  curl -X PUT http://localhost:3001/helloworlds/1 -H "Content-Type: application/json" -d '{"message": "Updated message from cURL!"}'
+  ```
+
+- Response:
+  ```json
+  {
+      "id": 1,
+      "message": "Updated message from cURL!",
+      "createdAt": "2024-10-20T04:07:30.111Z",
+      "updatedAt": "2024-10-20T04:10:45.678Z"
+  }
+  ```
+
+- **Error Handling**:
+  - `404 Not Found` – When the specified `id` does not exist:
+    ```json
+    {
+      "message": "HelloWorld object not found"
+    }
+    ```
+  - `500 Internal Server Error` – For any other server-related issues.
+
+### 4. DELETE `/helloworlds/:id`
+Deletes an existing HelloWorld message by ID.
+
+- Example:
+  ```bash
+  curl -X DELETE http://localhost:3001/helloworlds/1
+  ```
+
+- Response:
+  - `204 No Content` – Success, with no content returned.
+
+- **Error Handling**:
+  - `404 Not Found` – When the specified `id` does not exist:
+    ```json
+    {
+      "message": "HelloWorld message not found"
+    }
+    ```
+  - `500 Internal Server Error` – For any other server-related issues.
+
+
+
 ## Endpoints:
 
 ---
 
 ### A note about protected endpoints:
 
-A JWT (JSON Web Token) must be supplied with the header of all protected routes. Protected routes receiving a request
+A JWT (JSON Web Token) must be supplied in the header of all protected routes. Protected routes receiving a request
 without a JWT will return status ```401``` with the message ```Unauthorized: No token provided```. Protected routes
 receiving a request with an invalid token will return status ```403``` with the message
 ```Unauthorized: Invalid token```.
 
-#### TODO: Provide usage examples
+
+#### 1. Example (React `fetch')
+In a React component, we can use `fetch` to send the JWT as part of the `Authorization` header:
+
+```javascript
+const fetchProtectedData = async () => {
+    const token = "your-jwt-token"; // Replace this with your actual JWT, e.g., from localStorage
+
+    try {
+        const response = await fetch("http://localhost:3001/helloworlds", {
+            method: "GET",
+            headers: {
+                "Authorization": `Bearer ${token}`
+            }
+        });
+
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        console.log("Data:", data);
+    } catch (error) {
+        console.error("Error fetching protected data:", error);
+    }
+};
+
+// Example usage in a component
+fetchProtectedData();
+```
+
+### 2. Example (`curl`)
+
+To test the endpoint with `curl`, include the `Authorization` header as follows:
+
+```bash
+curl -X GET http://localhost:3001/helloworlds -H "Authorization: Bearer your-jwt-token"
+```
+
+Replace `"your-jwt-token"` with an actual token. If the token is valid, you should get a successful response from the endpoint.
 
 ---
 
