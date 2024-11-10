@@ -77,10 +77,10 @@ exports.getLikeArtwork = async (req, res) => {
 // Create a new like with fields 'user' and 'artwork'
 exports.createLike = async (req, res) => {
     try {
-        const { user, artwork } = req.body;
+        const { userId, artworkId } = req.body;
         const like = await Like.create({
-            user: user,
-            artwork: artwork
+            userId: userId,
+            artworkId: artworkId
         });
         res.status(201).json(like);
     } catch (error) {
@@ -96,8 +96,8 @@ exports.modifyLike = async (req, res) => {
         const like = await Like.findByPk(id);
         if (!like) return res.status(404).json({message: 'No Like found'});
         await like.update( {
-            user: userId,
-            artwork: artworkId
+            userId: userId,
+            artworkId: artworkId
         });
         res.status(200).json(like);
     } catch (error) {
