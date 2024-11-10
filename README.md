@@ -13,6 +13,8 @@ class project for UOCS 422
     - [/helloworlds](#helloworlds)
     - [/helloworlds/protected](#helloworldsprotected)
     - [/users](#users)
+    - [/likes](#likes)
+    - [/artworks](#artworks)
 
 ---
 
@@ -167,3 +169,42 @@ These routes require [JWT verification](#a-note-about-protected-endpoints).
 | `/users`              | `POST`          | Creates a new user with Google account details.     | None                                 | `googleId` (string) <br> `email` (string) <br> `name` (string) | `201 Created` – New user object <br> `400 Bad Request` – Error message                                              |
 | `/users/:id`          | `PUT`           | Updates an existing user’s name or email.           | `id` (path) – User’s unique ID      | `email` (string, optional) <br> `name` (string, optional) | `200 OK` – Updated user object <br> `404 Not Found` – User not found <br> `400 Bad Request` – Error message                                            |
 | `/users/:id`          | `DELETE`        | Deletes a user by their unique ID.                  | `id` (path) – User’s unique ID      | None                                                   | `200 OK` – Success message <br> `404 Not Found` – User not found <br> `500 Internal Server Error` – Error message                                         |
+
+---
+
+### ```/likes```
+
+| **Endpoint**           | **HTTP Method** | **Description**                                         | **Parameters**                     | **Request Body**                      | **Response**                                                                                                                                                   |
+|------------------------|-----------------|---------------------------------------------------------|------------------------------------|---------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `/likes`               | `GET`           | Retrieves recent likes with limit and offset.           | `offset` (query) - Start position <br> `limit` (query) - Max likes to return | None                                  | `200 OK` – Array of likes <br> `404 Not Found` – No likes found <br> `500 Internal Server Error` – Error message                                                |
+| `/likes/:id`           | `GET`           | Retrieves a specific like by its ID.                    | `id` (path) – Like's unique ID     | None                                  | `200 OK` – Like object <br> `404 Not Found` – Like not found <br> `500 Internal Server Error` – Error message                                                  |
+| `/likes/:id/user`      | `GET`           | Retrieves the user associated with a like.              | `id` (path) – Like's unique ID     | None                                  | `200 OK` – User object <br> `404 Not Found` – Like or associated user not found <br> `500 Internal Server Error` – Error message                              |
+| `/likes/:id/artwork`   | `GET`           | Retrieves the artwork associated with a like.           | `id` (path) – Like's unique ID     | None                                  | `200 OK` – Artwork object <br> `404 Not Found` – Like or associated artwork not found <br> `500 Internal Server Error` – Error message                        |
+| `/likes`               | `POST`          | Creates a new like with specified user and artwork IDs. | None                               | `user` (integer) - User ID <br> `artwork` (integer) - Artwork ID | `201 Created` – New like object <br> `500 Internal Server Error` – Error message                                        |
+| `/likes/:id`           | `PUT`           | Updates a like's user or artwork association.           | `id` (path) – Like's unique ID     | `userId` (integer) - New User ID <br> `artworkId` (integer) - New Artwork ID | `200 OK` – Updated like object <br> `404 Not Found` – Like not found <br> `500 Internal Server Error` – Error message                                     |
+| `/likes/:id`           | `DELETE`        | Deletes a like by its unique ID.                        | `id` (path) – Like's unique ID     | None                                  | `204 No Content` – Like successfully deleted <br> `404 Not Found` – Like not found <br> `500 Internal Server Error` – Error message                           |
+
+### Explanation of Fields
+
+- **`offset` and `limit`** in `GET /likes`: These optional query parameters allow the client to specify a starting point and the maximum number of likes to retrieve, supporting pagination.
+- **Request body** in `POST /likes` and `PUT /likes/:id`: Both `userId` and `artworkId` fields specify associations between `Like`, `User`, and `Artwork`.
+
+---
+
+Here's documentation for the `artworksController` endpoints, following the specified format:
+
+---
+
+### `/artworks`
+
+| **Endpoint**               | **HTTP Method** | **Description**                                          | **Parameters**                         | **Request Body**                                    | **Response**                                                                                                                                                   |
+|----------------------------|-----------------|----------------------------------------------------------|----------------------------------------|-----------------------------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `/artworks`                | `GET`           | Retrieves a limited number of artworks, sorted by most recent. | `n` (query) – Number of artworks to retrieve <br> `offset` (query) – Number of artworks to skip (default: 0) | None | `200 OK` – Array of artworks <br> `404 Not Found` – No artworks found <br> `500 Internal Server Error` – Error message |
+| `/artworks/:id`            | `GET`           | Retrieves a specific artwork by its unique ID.           | `id` (path) – Artwork's unique ID     | None                                                | `200 OK` – Artwork object <br> `404 Not Found` – Artwork not found <br> `500 Internal Server Error` – Error message                                          |
+| `/artworks/:id/user`       | `GET`           | Retrieves the user who created the specified artwork.     | `id` (path) – Artwork's unique ID     | None                                                | `200 OK` – User object associated with the artwork <br> `404 Not Found` – Artwork or user not found <br> `500 Internal Server Error` – Error message          |
+| `/artworks/:id/likes`      | `GET`           | Retrieves all likes associated with a specified artwork.  | `id` (path) – Artwork's unique ID     | None                                                | `200 OK` – Array of likes <br> `404 Not Found` – Artwork or likes not found <br> `500 Internal Server Error` – Error message                                  |
+| `/artworks`                | `POST`          | Creates a new artwork entry.                             | None                                   | None (or parameters to be defined)                   | `201 Created` – New artwork object <br> `500 Internal Server Error` – Error message                                                                           |
+| `/artworks/:id`            | `PUT`           | Updates an existing artwork's fields.                    | `id` (path) – Artwork's unique ID     | None (or parameters to be defined)                   | `200 OK` – Updated artwork object <br> `404 Not Found` – Artwork not found <br> `500 Internal Server Error` – Error message                                   |
+| `/artworks/:id`            | `DELETE`        | Deletes an artwork by its unique ID.                     | `id` (path) – Artwork's unique ID     | None                                                | `204 No Content` – Successfully deleted <br> `404 Not Found` – Artwork not found <br> `500 Internal Server Error` – Error message                             |
+
+---
