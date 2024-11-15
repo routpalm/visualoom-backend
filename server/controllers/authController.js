@@ -27,7 +27,7 @@ exports.verifyOauth2Token = async (req, res) => {
         const userId = payload['sub']; // Google user ID
 
         // Generate a JWT for the user
-        const token = jwt.sign({userId, email: payload.email}, process.env.JWT_SECRET, {
+        const token = jwt.sign({userId, email: payload.email, name: payload.name}, process.env.JWT_SECRET, {
             expiresIn: '1h',
         });
 
