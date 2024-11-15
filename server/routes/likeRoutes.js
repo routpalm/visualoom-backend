@@ -4,6 +4,8 @@
 const router = require("express").Router();
 const likesController = require("../controllers/likesController");
 
+// TODO: Add some check to make sure that createLike
+//       references an existing user and artwork
 
 // GET
 router.get("/", likesController.getLikes)
