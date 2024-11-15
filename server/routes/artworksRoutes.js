@@ -11,11 +11,10 @@ const artworksController = require('../controllers/artworksController');
 router.get('/', artworksController.getAllArtworks)
 router.get('/:id', artworksController.getArtworkById)
 router.get('/:id/user', artworksController.getArtworkUser)
-// router.get('/:id/params', artworksController.getArtworkParams)
-router.get('/:id', artworksController.getArtworkLikes)
+router.get('/:id/likes', artworksController.getArtworkLikes)
 
 // POST
-router.post('/:id', artworksController.createArtwork)
+router.post('/', artworksController.createArtwork)
 
 // PUT
 router.put('/:id', artworksController.updateArtwork)
