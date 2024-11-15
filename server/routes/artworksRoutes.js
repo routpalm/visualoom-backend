@@ -4,6 +4,8 @@
 const router = require('express').Router();
 const artworksController = require('../controllers/artworksController');
 
+// TODO: Add some checks to make sure that createArtwork
+//       references an existing user
 
 // GET
 router.get('/', artworksController.getAllArtworks)
