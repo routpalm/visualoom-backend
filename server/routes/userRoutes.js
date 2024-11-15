@@ -10,10 +10,10 @@ router.get('/:id', usersController.getUserById)
 router.get('/:id/likes', usersController.getUserLikes)
 router.get('/:id/artwork', usersController.getUserArtworks)
 
-router.post('/:id', usersController.createUser);
+router.post('/', usersController.createUser);
 
 router.put('/:id', usersController.updateUser)
 
-router.delete(':id', usersController.deleteUser)
+router.delete('/:id', usersController.deleteUser)
 
 module.exports = router;
