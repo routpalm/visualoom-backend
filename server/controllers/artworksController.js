@@ -91,13 +91,12 @@ exports.createArtwork = async (req, res) => {
     try {
         const { userId, algorithm, exifData, colorPalette, pixelCluster } = req.body;
 
-        // validate required fields
-        if (!userId || !algorithm) {
-            return res.status(400).json({ error: 'userId and algorithm are required.' });
+        // Validate inputs
+        if (!userId || !algorithm || !exifData || !colorPalette || !pixelCluster) {
+            return res.status(400).json({ error: 'Missing required fields.' });
         }
 
-        // save the artwork to the database
-        const newArtwork = await Artwork.create({
+        const artwork = await Artwork.create({
             userId,
             algorithm,
             exifData,
@@ -105,7 +104,7 @@ exports.createArtwork = async (req, res) => {
             pixelCluster,
         });
 
-        res.status(201).json(newArtwork);
+        res.status(201).json(artwork);
     } catch (error) {
         console.error('Error creating artwork:', error);
         res.status(500).json({ error: 'Failed to create artwork.' });
