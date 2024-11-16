@@ -1,5 +1,6 @@
 // ./server/config/sessionConfig.js
 
+// TODO: We can probably get rid of this whole file
 
 const sessionConfig = () => {
     return {
