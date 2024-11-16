@@ -1,7 +1,7 @@
 // ./server/controllers/artworksController.js
 
 
-const { Artwork, Like, Params, User } = require('../models');
+const { Artwork, Like, User } = require('../models');
 
 
 exports.getAllArtworks = async (req, res) => {
@@ -14,7 +14,14 @@ exports.getAllArtworks = async (req, res) => {
             offset: offset,
             order: [
                 ['createdAt', 'DESC']
+            ],
+            include: [
+                {
+                    model: User,
+                    as: 'user'
+                }
             ]
+
         });
 
         if (artworks.length > 0) {
@@ -31,8 +38,15 @@ exports.getAllArtworks = async (req, res) => {
 
 exports.getArtworkById = async (req, res) => {
     try {
-        const { id } = res.params
-        const artwork = Artwork.findOne( { where: id })
+        const { id } = req.params
+        const artwork = await Artwork.findByPk( id,{
+            include: [
+                {
+                    model: User,
+                    as: 'user'
+                }
+            ]
+        })
 
         if(artwork) return res.status(200).json(artwork);
         else {
@@ -40,6 +54,7 @@ exports.getArtworkById = async (req, res) => {
         }
     }
     catch (error) {
+        console.error(error)
         res.status(500).json({error: 'Failed to fetch artworks'});
     }
 }
@@ -49,38 +64,28 @@ exports.getArtworkUser = async (req, res) => {
         const { id } = req.params;
 
         const artwork = Artwork.findByPk(id,{
-            include: [{model: User, as: 'user'}]
+            include: [
+                {
+                    model: User,
+                    as: 'user'
+                }]
         })
         if (!artwork) return res.status(404).json({message: 'No Artwork found'});
-        res.status(200).json(artwork);
+        res.status(200).json(artwork.user);
     }
     catch (error) {
         res.status(500).json({error: 'Failed to fetch artwork user'});
     }
 }
 
-// exports.getArtworkParams = async (req, res) => {
-//     try {
-//         const { id } = req.params;
-//
-//         const artwork = Artwork.findByPk(id, {
-//             include: [{model: Params, as: 'params'}]
-//         });
-//         if (!artwork) return res.status(404).json({message: 'No Artwork found'});
-//         res.status(200).json(artwork);
-//     } catch (error) {
-//         res.status(500).json({error: 'Failed to fetch artwork params'});
-//     }
-// };
-
 exports.getArtworkLikes = async (req, res) => {
     try {
         const { id } = req.params;
         const artwork = Artwork.findByPk(id,{
-            include: [{ model: Like, as: 'like' }]
+            include: [{ model: Like, as: 'likes' }]
         });
         if (!artwork) return res.status(404).json({message: 'No Artwork found'});
-        res.status(200).json(artwork);
+        res.status(200).json(artwork.likes);
     } catch (error) {
         res.status(500).json({error: 'Failed to fetch artworks'});
     }
@@ -89,12 +94,47 @@ exports.getArtworkLikes = async (req, res) => {
 // TODO: Add parameters as they become available
 exports.createArtwork = async (req, res) => {
     try {
-        const {} = req.body;
-        const artwork = await Artwork.create({})
+        const {
+            userId,
+            seed,
+            colVibrant,
+            colLightVibrant,
+            colDarkVibrant,
+            colMuted,
+            colLightMuted,
+            colDarkMuted,
+            param1,
+            param2,
+            param3,
+            param4,
+            param5,
+            param6,
+            param7,
+            param8
+        } = req.body;
+        const artwork = await Artwork.create({
+            userId: userId,
+            seed: seed,
+            colVibrant: colVibrant,
+            colLightVibrant: colLightVibrant,
+            colDarkVibrant: colDarkMuted,
+            colMuted: colMuted,
+            colLightMuted: colLightMuted,
+            colDarkMuted: colDarkVibrant,
+            param1: param1,
+            param2: param2,
+            param3: param3,
+            param4: param4,
+            param5: param5,
+            param6: param6,
+            param7: param7,
+            param8: param8
+        })
         res.status(201).json(artwork);
 
     }
     catch (error) {
+        console.error(error)
         res.status(500).json({error: 'Failed to create artwork'});
     }
 }
