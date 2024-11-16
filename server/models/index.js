@@ -4,21 +4,28 @@
 // Import the sequelize instance
 const sequelize = require('../config/setupSequelize');
 
+
 // Import model definitions and initialize
+
+const HelloWorld = require('./HelloWorld')(sequelize)
+const User = require('./User')(sequelize)
+const Artwork = require('./Artwork')(sequelize)
+const Like = require('./Like')(sequelize)
+
 const models = {
-  Artwork: Artwork = require('./Artwork')(sequelize),
-  HelloWorld: HelloWorld = require('./HelloWorld')(sequelize),
-  Like: Like = require('./Like')(sequelize),
-  // Params: Params = require('./Params')(sequelize),
-  User: User = require('./User')(sequelize)
+  HelloWorld,
+  User,
+  Artwork,
+  Like
 }
 
+
 // Define relationships
-// Object.values(models).forEach((model) => {
-//   if (model.associate) {
-//     model.associate(models);
-//   }
-// });
+Object.values(models).forEach((model) => {
+  if (model.associate) {
+    model.associate(models);
+  }
+});
 
 
 // Export the Sequelize and model instances
