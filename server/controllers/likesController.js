@@ -13,7 +13,17 @@ exports.getLikes = async (req, res) => {
         const likes = await Like.findAll({
             limit: limit,
             offset: offset,
-            order: [['createdAt', 'DESC']]
+            order: [['createdAt', 'DESC']],
+            include: [
+                {
+                    model: User,
+                    as: 'user'
+                },
+                {
+                    model: Artwork,
+                    as: 'artwork'
+                }
+            ]
         });
 
         if (likes.length > 0) {
@@ -30,7 +40,18 @@ exports.getLikes = async (req, res) => {
 exports.getLikeById = async (req, res) => {
     try {
         const { id } = req.params;
-        const like = await Like.findByPk(id);
+        const like = await Like.findByPk(id, {
+            include: [
+                {
+                    model: User,
+                    as: 'user'
+                },
+                {
+                    model: Artwork,
+                    as: 'artwork'
+                }
+            ]
+        });
         if (!like) return res.status(404).json({message: 'No Like found'});
         res.status(200).json(like);
     } catch(error) {
