@@ -5,6 +5,7 @@ const jwt = require("jsonwebtoken");
 const {OAuth2Client} = require("google-auth-library");
 const JWT_SECRET = process.env.JWT_SECRET;
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+const User = require("../models/User");
 
 // TODO: Save new users
 
@@ -24,12 +25,25 @@ exports.verifyOauth2Token = async (req, res) => {
         });
 
         const payload = ticket.getPayload();
-        const userId = payload['sub']; // Google user ID
+        const googleId = payload['sub']; // Google user ID
+
+        const userdata = {
+            googleId: googleId,
+            email: payload.email,
+            name: payload.name
+        }
 
         // Generate a JWT for the user
-        const token = jwt.sign({userId, email: payload.email, name: payload.name}, process.env.JWT_SECRET, {
+        const token = jwt.sign(userdata, process.env.JWT_SECRET, {
             expiresIn: '1h',
         });
+
+        // If user does not exist in the db, create it
+        let user = await User.findOne({ where: { googleId } });
+
+        if (!user) {
+            user = await User.create(userdata);
+        }
 
         res.json({token});
     } catch (error) {
