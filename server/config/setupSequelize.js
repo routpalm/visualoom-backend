@@ -24,5 +24,9 @@ sequelize.sync()
     .then(() => console.log('Database synced'))
     .catch(err => console.error('Unable to sync database:', err));
 
+// test connection
+sequelize.query('SELECT 1+1 AS result')
+    .then(([results]) => console.log('Test Query Result:', results))
+    .catch(err => console.error('Test Query Error:', err));
 
 module.exports = sequelize;

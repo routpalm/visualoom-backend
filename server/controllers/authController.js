@@ -5,7 +5,7 @@ const jwt = require("jsonwebtoken");
 const {OAuth2Client} = require("google-auth-library");
 const JWT_SECRET = process.env.JWT_SECRET;
 const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
-const User = require("../models/User");
+const { User } = require("../models");
 
 // TODO: Save new users
 
@@ -25,6 +25,7 @@ exports.verifyOauth2Token = async (req, res) => {
         });
 
         const payload = ticket.getPayload();
+        console.log(payload);
         const googleId = payload['sub']; // Google user ID
 
         const userdata = {
@@ -38,6 +39,9 @@ exports.verifyOauth2Token = async (req, res) => {
             expiresIn: '1h',
         });
 
+        console.log('User Model:', User);
+        console.log('User Prototype Methods:', Object.keys(User.prototype));
+
         // If user does not exist in the db, create it
         let user = await User.findOne({ where: { googleId } });
 
@@ -48,6 +52,10 @@ exports.verifyOauth2Token = async (req, res) => {
         res.json({token});
     } catch (error) {
         res.status(401).json({error: 'Invalid ID token'});
+        console.log(error);
+        console.log('GOOGLE_CLIENT_ID:', process.env.GOOGLE_CLIENT_ID);
+        console.log('GOOGLE_CLIENT_SECRET:', process.env.GOOGLE_CLIENT_SECRET);
+        console.log('JWT_SECRET:', process.env.JWT_SECRET);
     }
 }
 

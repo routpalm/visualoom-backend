@@ -33,3 +33,7 @@ module.exports = {
   sequelize,
   ...models
 };
+
+//console.log('Loaded models:', Object.keys(models));
+//console.log('User Model:', User);
+//console.log('User Prototype Methods:', Object.keys(User.prototype));

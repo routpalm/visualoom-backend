@@ -93,83 +93,46 @@ exports.getArtworkLikes = async (req, res) => {
 
 exports.createArtwork = async (req, res) => {
     try {
-        const {
-            userId,
-            seed,
-            colVibrant,
-            colLightVibrant,
-            colDarkVibrant,
-            colMuted,
-            colLightMuted,
-            colDarkMuted,
-            param1,
-            param2,
-            param3,
-            param4,
-            param5,
-            param6,
-            param7,
-            param8
-        } = req.body;
-        const artwork = await Artwork.create({
-            userId: userId,
-            seed: seed,
-            colVibrant: colVibrant,
-            colLightVibrant: colLightVibrant,
-            colDarkVibrant: colDarkMuted,
-            colMuted: colMuted,
-            colLightMuted: colLightMuted,
-            colDarkMuted: colDarkVibrant,
-            param1: param1,
-            param2: param2,
-            param3: param3,
-            param4: param4,
-            param5: param5,
-            param6: param6,
-            param7: param7,
-            param8: param8
-        })
-        res.status(201).json(artwork);
+        const { userId, algorithm, exifData, colorPalette, pixelCluster } = req.body;
 
-        // validate required fields
-        if (!userId || !algorithm) {
-            return res.status(400).json({ error: 'userId and algorithm are required.' });
-        }
-
-        // save the artwork to the database
         const newArtwork = await Artwork.create({
             userId,
             algorithm,
-            exifData,
-            colorPalette,
-            pixelCluster,
+            exifData: JSON.stringify(exifData), // Store as JSON string
+            colorPalette: JSON.stringify(colorPalette), // Store as JSON string
+            pixelCluster: JSON.stringify(pixelCluster), // Store as JSON string
         });
 
         res.status(201).json(newArtwork);
     } catch (error) {
         console.error('Error creating artwork:', error);
-        res.status(500).json({ error: 'Failed to create artwork.' });
+        res.status(500).json({ error: 'Failed to create artwork' });
     }
-}
+};
 
 // TODO: add parameters as they become available
 exports.updateArtwork = async (req, res) => {
     try {
         const { id } = req.params;
-        // deconstruct the members we want to update
-        const {} = req.body;
-        const artwork = await Artwork.findByPk(id)
-        if (!artwork) return res.status(404).json({message: 'No Artwork found'});
-        // update fields here
-        await artwork.update({
-            // members with values to update go here
-        });
+        const { algorithm, exifData, colorPalette, pixelCluster } = req.body;
+
+        const artwork = await Artwork.findByPk(id);
+        if (!artwork) {
+            return res.status(404).json({ error: 'Artwork not found' });
+        }
+
+        artwork.algorithm = algorithm || artwork.algorithm;
+        artwork.exifData = exifData ? JSON.stringify(exifData) : artwork.exifData;
+        artwork.colorPalette = colorPalette ? JSON.stringify(colorPalette) : artwork.colorPalette;
+        artwork.pixelCluster = pixelCluster ? JSON.stringify(pixelCluster) : artwork.pixelCluster;
+
+        await artwork.save();
         res.status(200).json(artwork);
+    } catch (error) {
+        console.error('Error updating artwork:', error);
+        res.status(500).json({ error: 'Failed to update artwork' });
     }
-    catch (error) {
-        res.status(505).json({error: 'Failed to update artwork'});
-    }
-}
+};
 
 exports.deleteArtwork = async (req, res) => {
     try {
