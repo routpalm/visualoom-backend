@@ -16,6 +16,7 @@ exports.getAllUsers = async (req, res) => {
     }
 };
 
+
 // get user by internal id
 exports.getUserById = async (req, res) => {
     try {

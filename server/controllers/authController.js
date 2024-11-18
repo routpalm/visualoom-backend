@@ -58,7 +58,31 @@ exports.verifyOauth2Token = async (req, res) => {
         console.log('JWT_SECRET:', process.env.JWT_SECRET);
     }
 }
+exports.decodeJWTAndMapUser = async (req, res) => {
+    const token = req.headers['authorization']?.split(' ')[1]; // Extract token from header
+    if (!token) {
+        console.log(`token: ${token}`);
+        return res.status(400).json({ error: 'JWT token is required' });
+    }
 
+    try {
+        // decode JWT
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        const googleId = decoded.googleId;
+
+        // find user by Google ID
+        const user = await User.findOne({ where: { googleId } });
+        if (!user) {
+            return res.status(404).json({ error: 'User not found' });
+        }
+
+        // return user's internal ID
+        res.status(200).json({ userId: user.id });
+    } catch (error) {
+        console.error('Error decoding JWT or mapping user:', error);
+        res.status(500).json({ error: 'Failed to process JWT' });
+    }
+};
 exports.verifyJWT = (req, res, next) => {
     const token = req.headers['authorization']?.split(' ')[1];
     if (!token) {
@@ -72,7 +96,7 @@ exports.verifyJWT = (req, res, next) => {
             return res.status(403).json({ message: 'Unauthorized: Invalid token' });
         }
         // TODO: Discard the log statement when we're done with it
-        console.log(decoded)
+        //console.log(decoded)
         req.user = decoded;  // attaching the decoded user info to the request
         next();
     });

@@ -1,14 +1,13 @@
 const express = require('express');
 const router = express.Router();
 const usersController = require('../controllers/usersController');
-const { verifyJWT } = require('../controllers/authController');
+const { decodeJWTAndMapUser } = require('../controllers/authController');
 
-// TODO: Protect sensitive routes using verifyJWT
-
-
+router.get('/map-jwt', decodeJWTAndMapUser);
 router.get('/:id', usersController.getUserById)
 router.get('/:id/likes', usersController.getUserLikes)
 router.get('/:id/artwork', usersController.getUserArtworks)
+router.get('/map-jwt', decodeJWTAndMapUser);
 
 router.post('/', usersController.createUser);
 
