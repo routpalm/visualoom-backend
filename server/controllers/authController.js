@@ -38,7 +38,7 @@ exports.verifyOauth2Token = async (req, res) => {
         const token = jwt.sign(userdata, process.env.JWT_SECRET, {
             expiresIn: '1h',
         });
-
+        /*
         console.log('User Model:', User);
         console.log('User Prototype Methods:', Object.keys(User.prototype));
 
@@ -48,7 +48,7 @@ exports.verifyOauth2Token = async (req, res) => {
         if (!user) {
             user = await User.create(userdata);
         }
-
+        */
         res.json({token});
     } catch (error) {
         res.status(401).json({error: 'Invalid ID token'});
