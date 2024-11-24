@@ -22,8 +22,19 @@ exports.getUserById = async (req, res) => {
     try {
         const { id } = req.params;
 
-        const user = await User.findByPk(id)
-
+        const user = await User.findByPk(id,
+            {
+                include: [
+                    {
+                        model: Artwork,
+                        as: 'artworks'
+                    },
+                    {
+                        model: Like,
+                        as: 'likes'
+                    }
+                ]
+            })
         if (user) {
             res.status(200).json(user);
         } else {
@@ -31,7 +42,8 @@ exports.getUserById = async (req, res) => {
         }
     }
     catch (error) {
-        res.status(500).json({error: 'Failed to fetch user'});
+        console.error('Error fetching user', error);
+        res.status(500).json({error: 'Error fetching user'});
     }
 }
 
