@@ -19,6 +19,10 @@ exports.getAllArtworks = async (req, res) => {
                 {
                     model: User,
                     as: 'user'
+                },
+                {
+                    model: Like,
+                    as: 'like'
                 }
             ]
 
@@ -44,6 +48,10 @@ exports.getArtworkById = async (req, res) => {
                 {
                     model: User,
                     as: 'user'
+                },
+                {
+                    model: Like,
+                    as: 'likes'
                 }
             ]
         })
