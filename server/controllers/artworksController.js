@@ -6,11 +6,11 @@ const { Artwork, Like, User } = require('../models');
 
 exports.getAllArtworks = async (req, res) => {
     try {
-        const num_to_get = parseInt(req.query.n) || 20;  // Default to 1
+        const n = parseInt(req.query.n) || 20;  // Default to 20
         const offset = parseInt(req.query.offset) || 0; // Default to 0
 
         const artworks = await Artwork.findAll({
-            limit: num_to_get,
+            limit: n,
             offset: offset,
             order: [
                 ['createdAt', 'DESC']
@@ -22,7 +22,7 @@ exports.getAllArtworks = async (req, res) => {
                 },
                 {
                     model: Like,
-                    as: 'like'
+                    as: 'likes'
                 }
             ]
 
@@ -36,6 +36,7 @@ exports.getAllArtworks = async (req, res) => {
 
     }
     catch (error) {
+        console.error('Error fetching Artworks', error);
         res.status(500).json({error: 'Failed to fetch artworks'});
     }
 }
