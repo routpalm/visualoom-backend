@@ -146,7 +146,7 @@ exports.updateArtwork = async (req, res) => {
 exports.deleteArtwork = async (req, res) => {
     try {
         const { id } = req.params;
-        const deleted = Artwork.destroy(id);
+        const deleted = Artwork.destroy( {where: {id}} );
         if (!deleted) return res.status(404).json({message: 'No Artwork found'});
         res.status(204).send(); // no content
     }
