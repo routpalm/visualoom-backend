@@ -20,7 +20,7 @@ sequelize.authenticate()
     .catch(err => console.error('Unable to connect to the database:', err));
 
 // Sync database  (use {force: true} to reset, DATA WILL BE LOST)
-sequelize.sync({force: true)
+sequelize.sync({force: true})
     .then(() => console.log('Database synced'))
     .catch(err => console.error('Unable to sync database:', err));
 
