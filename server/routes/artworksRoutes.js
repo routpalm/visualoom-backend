@@ -20,7 +20,7 @@ router.post('/', artworksController.createArtwork)
 router.put('/:id', artworksController.updateArtwork)
 
 // DELETE
-router.delete('/id:', artworksController.deleteArtwork)
+router.delete('/:id', artworksController.deleteArtwork)
 
 
 module.exports = router;
