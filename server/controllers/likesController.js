@@ -1,6 +1,9 @@
 // ./server/controllers/likesController.js
 
 
+// Provides logic for '/likes' endpoint
+
+
 const { Like, User, Artwork } = require('../models');
 
 // Gets 'limit' number of most recent likes starting with 'offset'

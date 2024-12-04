@@ -1,6 +1,9 @@
 // ./server/controllers/helloWorldController.js
 
 
+// Test controller used to lay groundwork for API implementation.
+
+
 const { HelloWorld } = require('../models');
 
 

@@ -1,5 +1,9 @@
 // ./server/routes/authRoutes.js
 
+
+// Provides sub-routes for the '/auth' branch of the API
+
+
 const express = require('express');
 const router = express.Router();
 const authController = require('../controllers/authController');

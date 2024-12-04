@@ -1,6 +1,9 @@
 // models/setupSequelize.js
 
 
+// Initializes Sequelize to connect to the supported database
+
+
 // Imports
 const { Sequelize } = require('sequelize');
 const dbConfig = require('./dbConfig')();

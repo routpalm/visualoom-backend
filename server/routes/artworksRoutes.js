@@ -1,6 +1,9 @@
 // ./server/routes/artworksRoutes.js
 
 
+// Provides sub-routes for the '/artworks' branch of the API
+
+
 const router = require('express').Router();
 const artworksController = require('../controllers/artworksController');
 

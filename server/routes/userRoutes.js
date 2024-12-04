@@ -1,3 +1,9 @@
+// ./server/routes/userRoutes.js
+
+
+// Provides sub-routes for the '/users' branch of the API
+
+
 const express = require('express');
 const router = express.Router();
 const usersController = require('../controllers/usersController');

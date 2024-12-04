@@ -1,6 +1,11 @@
 // ./server/config/setupRoutes.js
 
 
+// Routing configuration used by Express to expose
+// the API endpoints. Each branch is imported from
+// its own file in ./routes.
+
+
 const baseRoutes = require('../routes/baseRoutes');
 const helloWorldRoutes = require('../routes/helloWorldRoutes');
 const authRoutes = require('../routes/authRoutes');

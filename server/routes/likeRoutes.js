@@ -1,6 +1,9 @@
 // ./server/routes/likeRoutes.js
 
 
+// Provides sub-routes for the '/likes' branch of the API
+
+
 const router = require("express").Router();
 const likesController = require("../controllers/likesController");
 

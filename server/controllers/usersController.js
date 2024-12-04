@@ -1,6 +1,9 @@
 // ./server/controllers/usersController.js
 
 
+// Provides logic for '/users' endpoint
+
+
 const { User, Artwork, Like } = require('../models');
 
 // TODO: verifyJWT attaches req.user for use in succeeding controllers

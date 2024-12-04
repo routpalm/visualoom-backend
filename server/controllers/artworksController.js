@@ -1,6 +1,9 @@
 // ./server/controllers/artworksController.js
 
 
+// Provides the logic for the '/artworks' endpoints.
+
+
 const { Artwork, Like, User } = require('../models');
 
 

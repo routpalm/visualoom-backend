@@ -4,6 +4,9 @@ const helloWorldController = require('../controllers/helloWorldController');
 const { verifyJWT } = require('../controllers/authController');
 
 
+// Provides sub-routes for the '/helloWorlds' branch of the API
+
+
 // GET HelloWorld objects filtered by parameters
 router.get('/', helloWorldController.getHelloWorld);
 

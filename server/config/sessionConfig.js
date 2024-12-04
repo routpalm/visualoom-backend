@@ -1,5 +1,9 @@
 // ./server/config/sessionConfig.js
 
+
+// Configuration file left over from Sessions
+// support, which is no longer used.
+
 // TODO: We can probably get rid of this whole file
 
 const sessionConfig = () => {
