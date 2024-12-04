@@ -3,6 +3,9 @@
 Development documentation for UO CS-422 class project.
 
 ## Table of Contents
+- [Overview](#overview)
+  - [Technology](#technology)
+  - [File Structure](#file-structure)
 - [Environment](#environment)
   - [Steps to Reproduce](#steps-to-reproduce)
   - [Local PostgreSQL Setup](#for-local-postgresql)
@@ -21,6 +24,34 @@ Development documentation for UO CS-422 class project.
   - [/likes](#likes)
   - [/artworks](#artworks)
 
+---
+# Overview
+
+The VisuaLoom back-end facilitates the storage and retrieval of objects used by the VisuaLoom front-end. A RESTful API provides access to the database store. Authentication is provided using OAuth2 through Google's OAuth service.
+
+## Technology 
+
+- Node.js
+  - Node.js is a JavaScript runtime environment that allows the execution of JavaScript code outside of a web browser. This provides the basis for executing the application's code. 
+- Express
+  - Express is a fast, minimalist framework for Node.js. It provides the routing for the API's endpoints.   
+- Sequelize
+  - Sequelize is an ORM(object relational mapper) that supports PostreSQL, facilitating communication with the application's database.
+- PostresQL
+  - PostgreSQL is an open-source, object-relational database management system (ORDBMS) that supports SQL and JSON querying. This database stores all of  
+
+---
+
+## File Structure
+- **./server** - Source root for back end
+  - **/config** - Initialization scripts for project components
+  - **/controllers** - Controller logic for API endpoints
+  - **/migrations** - Stores scripts to 
+  - **/models** - Definitions for objects stored in DB
+  - **/routes** - Routes for the API
+- **./index.js** - Entry point for the application
+- **./package.json** - Required packages
+  
 ---
 
 # Environment
@@ -46,6 +77,9 @@ Development documentation for UO CS-422 class project.
 ```npx sequelize-cli init```
 
 ## For local PostgreSQL
+
+For development and testing, you may want to host your own instance of the PostreSQL database on your own local machine. You can do so by following these steps:
+
 - Download and install from [PostgreSQL Official Site.](https://www.postgresql.org/download/)
 - Be sure to include pgAdmin 4 in the installation options
 - After installation, ensure that the PostgreSQL service is running. You can start it manually via the PostgreSQL application or with "pgAdmin" or "SQL Shell (psql)"
