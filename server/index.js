@@ -2,13 +2,19 @@
 
 
 // Entry point for the application. This file loads environment
-// variables from ./config/config.env if it exists, runs the
-// setupscripts for Sequelize and Express, run the scripts which
-// expose the routes for the API, and finally starts the Express server.
+// variables from ./config/config.env if we are in our development
+// environment. For testing and production, the environment variables
+// are supplied externally. Then we run setup scripts for Sequelize
+// and Express, gollowed by the scripts which expose the routes for
+// the API, and finally we start the Express server.
 
 
 // imports
-require('dotenv').config({ path: './config/config.env' });
+if (process.env.NODE_ENV !== 'test') {
+    require('dotenv').config({ path: './config/config.env' });
+}
+console.log("NODE_ENV: " + process.env.NODE_ENV);
+console.log("DATABASE_URL: " + process.env.DATABASE_URL);
 const express = require('express');
 
 
