@@ -12,6 +12,7 @@ const authRoutes = require('../routes/authRoutes');
 const userRoutes = require('../routes/userRoutes');
 const artworksRoutes = require('../routes/artworksRoutes');
 const likeRoutes = require('../routes/likeRoutes');
+const adminRoutes = require('../routes/adminRoutes');
 
 
 function setupRoutes(app) {
@@ -21,6 +22,7 @@ function setupRoutes(app) {
     app.use('/users', userRoutes);
     app.use('/artworks', artworksRoutes);
     app.use('/likes', likeRoutes);
+    app.use('/admin', adminRoutes);
 }
 
 
