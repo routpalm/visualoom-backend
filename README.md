@@ -6,7 +6,9 @@ Development documentation for UO CS-422 class project.
 - [Overview](#overview)
   - [Technology](#technology)
   - [File Structure](#file-structure)
+  [Tests](#tests)
 - [Environment](#environment)
+  - [Docker](#docker)
   - [Steps to Reproduce](#steps-to-reproduce)
   - [Local PostgreSQL Setup](#for-local-postgresql)
 - [Usage](#usage)
@@ -54,7 +56,15 @@ The VisuaLoom back-end facilitates the storage and retrieval of objects used by 
   
 ---
 
+# Tests
+
+Integration tests are provided in `./tests/api.tests.js` using the [Jest testing framework](https://jestjs.io/), along with Axios to perform the HTTP requests. To run the tests, instances of the PostgreSQL database and the Express app `./server/index.js` must be running on the host machine, or from within the provided Docker composition. To run the tests, from the project root simply do `npm run test`.
+
+---
+
 # Environment
+## Docker:
+A Docker compose file is provided to rapidly construct a test environment. From the project root, run `docker compose up -d` to build and run the images. This includes an instance of PostgreSQL at `localhost:5432` and the Express app at `localhost:3001`.
 ## Steps to reproduce:
 - Download and Install [Node.js from the official website](https://nodejs.org/en)
 - Verify by running  
