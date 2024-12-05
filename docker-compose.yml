@@ -1,0 +1,22 @@
+services:
+  postgres-test:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: testuser
+      POSTGRES_PASSWORD: testpassword
+      POSTGRES_DB: testdb
+    ports:
+      - "5432:5432"
+
+  app-test:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    environment:
+      NODE_ENV: test
+      DATABASE_URL: "postgres://testuser:testpassword@postgres-test:5432/testdb"
+    ports:
+      - "3001:3001"
+    depends_on:
+      - postgres-test
+    command: ["sh", "-c", "sleep 10 && npm run test"]
