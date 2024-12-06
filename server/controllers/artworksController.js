@@ -1,12 +1,24 @@
 // ./server/controllers/artworksController.js
 
+// Author - Brett DeWitt
+// Created - Saturday, November 9, 2024, 10:55:32 AM
+// Provides the logic for the '/artworks' endpoints in the application
+// Handles retrieving, creating, updating, and deleting artworks, as well as fetching associated user and like data
 
-// Provides the logic for the '/artworks' endpoints.
 
+// ---------------------- Import Models ----------------------
 
+// Import the Artwork, Like, and User models for interacting with the database.
 const { Artwork, Like, User } = require('../models');
 
 
+// ---------------------- Get All Artworks ----------------------
+/**
+ * Handler to fetch a list of artworks with pagination support.
+ * Fetches artworks based on query parameters 'n' (number of artworks) and 'offset'.
+ * @param {Object} req - The request object containing 'n' and 'offset' query parameters.
+ * @param {Object} res - The response object that will contain the list of artworks or an error message.
+ */
 exports.getAllArtworks = async (req, res) => {
     try {
         const n = parseInt(req.query.n) || 20;  // Default to 20
@@ -44,6 +56,13 @@ exports.getAllArtworks = async (req, res) => {
     }
 }
 
+
+// ---------------------- Get Artwork by ID ----------------------
+/**
+ * Handler to fetch an artwork by its ID.
+ * @param {Object} req - The request object containing the artwork ID as a parameter.
+ * @param {Object} res - The response object that will contain the artwork data or an error message.
+ */
 exports.getArtworkById = async (req, res) => {
     try {
         const { id } = req.params
@@ -71,6 +90,13 @@ exports.getArtworkById = async (req, res) => {
     }
 }
 
+
+// ---------------------- Get Artwork by ID ----------------------
+/**
+ * Handler to fetch an artwork by its ID.
+ * @param {Object} req - The request object containing the artwork ID as a parameter.
+ * @param {Object} res - The response object that will contain the artwork data or an error message.
+ */
 exports.getArtworkUser = async (req, res) => {
     try {
         const { id } = req.params;
@@ -90,6 +116,13 @@ exports.getArtworkUser = async (req, res) => {
     }
 }
 
+
+// ---------------------- Get Artwork Likes ----------------------
+/**
+ * Handler to fetch the likes associated with an artwork by its ID.
+ * @param {Object} req - The request object containing the artwork ID as a parameter.
+ * @param {Object} res - The response object that will contain the likes or an error message.
+ */
 exports.getArtworkLikes = async (req, res) => {
     try {
         const { id } = req.params;
@@ -103,6 +136,13 @@ exports.getArtworkLikes = async (req, res) => {
     }
 }
 
+
+// ---------------------- Create Artwork ----------------------
+/**
+ * Handler to create a new artwork.
+ * @param {Object} req - The request object containing the userId, algorithm, exifData, colorPalette, and pixelCluster for the new artwork.
+ * @param {Object} res - The response object that will contain the created artwork or an error message.
+ */
 exports.createArtwork = async (req, res) => {
     try {
         const { userId, algorithm, exifData, colorPalette, pixelCluster } = req.body;
@@ -122,7 +162,13 @@ exports.createArtwork = async (req, res) => {
     }
 };
 
-// TODO: add parameters as they become available
+
+// ---------------------- Update Artwork ----------------------
+/**
+ * Handler to modify the details of an existing artwork.
+ * @param {Object} req - The request object containing the artwork ID as a parameter and the new details in the body.
+ * @param {Object} res - The response object that will contain the updated artwork or an error message.
+ */
 exports.updateArtwork = async (req, res) => {
     try {
         const { id } = req.params;
@@ -146,6 +192,13 @@ exports.updateArtwork = async (req, res) => {
     }
 };
 
+
+// ---------------------- Delete Artwork ----------------------
+/**
+ * Handler to delete an artwork by its ID.
+ * @param {Object} req - The request object containing the artwork ID as a parameter.
+ * @param {Object} res - The response object that will indicate the success or failure of the deletion.
+ */
 exports.deleteArtwork = async (req, res) => {
     try {
         const { id } = req.params;

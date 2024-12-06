@@ -1,15 +1,19 @@
 // ./server/controllers/usersController.js
 
+// Author - Brett DeWitt
+// Created - Friday, November 8, 2024, 6:39:32 PM
+// Provides logic for handling '/users' endpoint
 
-// Provides logic for '/users' endpoint
-
-
+// ---------------------- Import Models ----------------------
 const { User, Artwork, Like } = require('../models');
 
-// TODO: verifyJWT attaches req.user for use in succeeding controllers
 
-
-// Get all users
+// ---------------------- Get All Users ----------------------
+/**
+ * Handler to fetch all users.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object.
+ */
 exports.getAllUsers = async (req, res) => {
     try {
         const users = await User.findAll();
@@ -20,11 +24,17 @@ exports.getAllUsers = async (req, res) => {
 };
 
 
-// get user by internal id
+// ---------------------- Get User by ID ----------------------
+/**
+ * Handler to fetch a user by their ID.
+ * @param {Object} req - The request object containing the user ID.
+ * @param {Object} res - The response object.
+ */
 exports.getUserById = async (req, res) => {
     try {
         const { id } = req.params;
 
+        // Fetch user and include related artworks and likes
         const user = await User.findByPk(id,
             {
                 include: [
@@ -50,13 +60,20 @@ exports.getUserById = async (req, res) => {
     }
 }
 
-// get artwork by user
+// ---------------------- Get User Artworks ----------------------
+/**
+ * Handler to fetch artworks by a user.
+ * Supports pagination via query parameters `limit` and `offset`.
+ * @param {Object} req - The request object containing the user ID and query parameters.
+ * @param {Object} res - The response object.
+ */
 exports.getUserArtworks = async (req, res) => {
     try {
         const { id } = req.params;
         const limit = parseInt(req.query.limit) || 20; // Default to 20
         const offset = parseInt(req.query.offset) || 0; // Default to 0
 
+        // Fetch user with artworks, applying pagination
         const user = await User.findByPk(id, {
             include: [
                 {
@@ -78,11 +95,17 @@ exports.getUserArtworks = async (req, res) => {
     }
 };
 
-// get likes by user
+// ---------------------- Get User Likes ----------------------
+/**
+ * Handler to fetch likes by a user.
+ * @param {Object} req - The request object containing the user ID.
+ * @param {Object} res - The response object.
+ */
 exports.getUserLikes = async (req, res) => {
     try {
         const { id } = req.params;
 
+        // Fetch user with their likes
         const user = await User.findByPk(id, {
             include: [{ model: Like, as: 'like' }]
         });
@@ -93,7 +116,13 @@ exports.getUserLikes = async (req, res) => {
     }
 };
 
-// creates a user with googleId, email, and name
+
+// ---------------------- Create User ----------------------
+/**
+ * Handler to create a new user.
+ * @param {Object} req - The request object containing user data (googleId, email, name).
+ * @param {Object} res - The response object.
+ */
 exports.createUser = async (req, res) => {
     try {
         const {googleId, email, name} = req.body;
@@ -105,7 +134,12 @@ exports.createUser = async (req, res) => {
     }
 };
 
-// update a user's name or email
+// ---------------------- Update User ----------------------
+/**
+ * Handler to update a user's details (email or name).
+ * @param {Object} req - The request object containing the user ID and update data.
+ * @param {Object} res - The response object.
+ */
 exports.updateUser = async (req, res) => {
     try {
         const { id } = req.params;
@@ -123,7 +157,12 @@ exports.updateUser = async (req, res) => {
     }
 }
 
-// delete a user
+// ---------------------- Delete User ----------------------
+/**
+ * Handler to delete a user by their ID.
+ * @param {Object} req - The request object containing the user ID.
+ * @param {Object} res - The response object.
+ */
 exports.deleteUser = async (req, res) => {
     // TODO: Protect using req.user from verifyJWT
     try {

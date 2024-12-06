@@ -1,13 +1,23 @@
 // ./server/controllers/helloWorldController.js
 
+// Author - Brett DeWitt
+// Created - Sunday, October 27, 2024, 9:59:47 PM
+// Provides logic for '/helloWorld' endpoint in the application
+// Handles fetching, creating, modifying, and deleting HelloWorld messages
 
-// Test controller used to lay groundwork for API implementation.
 
-
+// ---------------------- Import Models ----------------------
 const { HelloWorld } = require('../models');
 
 
-// Controller for handling GET request
+
+// ---------------------- Get HelloWorld Messages ----------------------
+/**
+ * Handler to fetch a list of HelloWorld messages with pagination support.
+ * Fetches messages based on query parameters 'n' (limit) and 'offset'.
+ * @param {Object} req - The request object containing 'n' (limit) and 'offset' query parameters.
+ * @param {Object} res - The response object that will contain the list of messages or an error message.
+ */
 exports.getHelloWorld = async (req, res) => {
     try {
         // Get the number of items to retrieve and the offset from the query parameters
@@ -38,7 +48,13 @@ exports.getHelloWorld = async (req, res) => {
     }
 };
 
-// Controller for handling GET request
+
+// ---------------------- Get HelloWorld Message by ID ----------------------
+/**
+ * Handler to fetch a HelloWorld message by its ID.
+ * @param {Object} req - The request object containing the message ID as a parameter.
+ * @param {Object} res - The response object that will contain the message data or an error message.
+ */
 exports.getHelloWorldById = async (req, res) => {
     try {
 
@@ -64,7 +80,13 @@ exports.getHelloWorldById = async (req, res) => {
     }
 };
 
-// Controller for handling POST request (if you allow creating records via API)
+
+// ---------------------- Create HelloWorld Message ----------------------
+/**
+ * Handler to create a new HelloWorld message.
+ * @param {Object} req - The request object containing the 'message' for the new HelloWorld.
+ * @param {Object} res - The response object that will contain the created message or an error message.
+ */
 exports.createHelloWorld = async (req, res) => {
     try {
         const { message } = req.body;
@@ -78,6 +100,13 @@ exports.createHelloWorld = async (req, res) => {
     }
 };
 
+
+// ---------------------- Modify HelloWorld Message ----------------------
+/**
+ * Handler to modify an existing HelloWorld message by its ID.
+ * @param {Object} req - The request object containing the message ID as a parameter and the new message in the body.
+ * @param {Object} res - The response object that will contain the updated message or an error message.
+ */
 exports.modifyHelloWorld = async (req, res) => {
     try {
         const { message } = req.body;
@@ -103,6 +132,13 @@ exports.modifyHelloWorld = async (req, res) => {
     }
 };
 
+
+// ---------------------- Delete HelloWorld Message ----------------------
+/**
+ * Handler to delete a HelloWorld message by its ID.
+ * @param {Object} req - The request object containing the message ID as a parameter.
+ * @param {Object} res - The response object that will indicate the success or failure of the deletion.
+ */
 exports.deleteHelloWorld = async (req, res) => {
     try {
         const { id } = req.params;

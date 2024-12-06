@@ -1,9 +1,17 @@
 // ./server/controllers/authController.js
 
+// Author - Brett DeWitt
+// Created - Friday, November 8, 2024, 2:19:49 PM
+// Provides logic for '/auth' endpoints, handling user authentication via Google OAuth2
+// and JWT token generation and verification for secure access
 
-// provides the logic for the '/auth' endpoints.
-
-
+// ---------------------- Import Dependencies ----------------------
+/**
+ * Import required dependencies for authentication handling:
+ * - JWT for token creation and verification
+ * - OAuth2Client from google-auth-library for OAuth2 token verification
+ * - User model for interacting with the user database
+ */
 const jwt = require("jsonwebtoken");
 const {OAuth2Client} = require("google-auth-library");
 const JWT_SECRET = process.env.JWT_SECRET;
@@ -11,6 +19,13 @@ const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
 const { User } = require("../models");
 
 
+// ---------------------- Verify OAuth2 Token ----------------------
+/**
+ * Verifies the OAuth2 token provided by Google and creates or fetches the user in the database.
+ * - Accepts a Google ID token, verifies it, and generates a JWT for the user.
+ * @param {Object} req - The request object containing the Google ID token.
+ * @param {Object} res - The response object that will return the JWT or an error message.
+ */
 exports.verifyOauth2Token = async (req, res) => {
     const {idToken} = req.body;
     console.log(req.body);
@@ -60,6 +75,16 @@ exports.verifyOauth2Token = async (req, res) => {
         console.log('JWT_SECRET:', process.env.JWT_SECRET);
     }
 }
+
+
+// ---------------------- Decode JWT and Map User ----------------------
+/**
+ * Decodes the JWT token and maps the user associated with the token.
+ * - Extracts the JWT token from the authorization header, verifies it,
+ *   and fetches the user from the database based on Google ID.
+ * @param {Object} req - The request object containing the JWT token in the authorization header.
+ * @param {Object} res - The response object that will return the user's internal ID or an error message.
+ */
 exports.decodeJWTAndMapUser = async (req, res) => {
     const token = req.headers['authorization']?.split(' ')[1]; // Extract token from header
     if (!token) {
@@ -85,6 +110,17 @@ exports.decodeJWTAndMapUser = async (req, res) => {
         res.status(500).json({ error: 'Failed to process JWT' });
     }
 };
+
+
+// ---------------------- Verify JWT ----------------------
+/**
+ * Middleware to verify the JWT token for protected routes.
+ * - Extracts and verifies the JWT token from the authorization header,
+ *   and attaches the decoded user information to the request object.
+ * @param {Object} req - The request object containing the JWT token in the authorization header.
+ * @param {Object} res - The response object that will return an error message if the token is invalid.
+ * @param {Function} next - The next middleware function to call if the token is valid.
+ */
 exports.verifyJWT = (req, res, next) => {
     const token = req.headers['authorization']?.split(' ')[1];
     if (!token) {

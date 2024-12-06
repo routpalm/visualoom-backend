@@ -4,12 +4,12 @@ Development documentation for UO CS-422 class project.
 
 ## Table of Contents
 - [Overview](#overview)
-  - [Technology](#technology)
+  - [Technology](#technology-)
   - [File Structure](#file-structure)
   [Tests](#tests)
 - [Environment](#environment)
   - [Docker](#docker)
-  - [Steps to Reproduce](#steps-to-reproduce)
+  - [Reproducing the Environment](#reproducing-the-environment)
   - [Local PostgreSQL Setup](#for-local-postgresql)
 - [Usage](#usage)
   - [Note on Express Ports](#note-on-express-ports)
@@ -64,8 +64,9 @@ Integration tests are provided in `./tests/api.tests.js` using the [Jest testing
 
 # Environment
 ## Docker:
-A Docker compose file is provided to rapidly construct a test environment. From the project root, run `docker compose up -d` to build and run the images. This includes an instance of PostgreSQL at `localhost:5432` and the Express app at `localhost:3001`.
-## Steps to reproduce:
+An experimental Docker compose file is provided to rapidly construct a test environment. From the project root, run `docker compose up -d` to build and run the images. This includes an instance of PostgreSQL at `localhost:5432` and the Express app at `localhost:3001`. Again, this configuration is experimental and may not work in every environment. Use at your own discretion.
+
+## Reproducing the environment:
 - Download and Install [Node.js from the official website](https://nodejs.org/en)
 - Verify by running  
 ```node --version; npm --version```

@@ -1,9 +1,26 @@
 // ./server/controllers/adminController.js
 
+
+// Author - Brett DeWitt
+// Created - Wednesday, December 4, 2024, 9:13:55 PM
+// Provides logic for '/admin' endpoint in the application
+// Handles administrative tasks, such as resetting the database
+
+
+// ---------------------- Imports ----------------------
+/**
+ * Import the sequelize instance for interacting with the database.
+ */
 const sequelize = require('../config/setupSequelize');
 
 
-// resets the db. Only active in development environment
+// ---------------------- Reset Database ----------------------
+/**
+ * Handler to reset the database by synchronizing the Sequelize models.
+ * This operation is only allowed in the development environment.
+ * @param {Object} req - The request object.
+ * @param {Object} res - The response object that will indicate the success or failure of the reset.
+ */
 exports.resetdb = (req, res) => {
     console.log('Admin/reset route accessed');
 
@@ -19,4 +36,3 @@ exports.resetdb = (req, res) => {
             res.status(500).json({ error: 'Unable to reset database', details: err.message });
         });
 };
-

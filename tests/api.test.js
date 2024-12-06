@@ -1,16 +1,28 @@
 // ./tests/api.test.js
 
+// Author - Brett DeWitt
+// Created - Saturday, December 7, 2024, 11:45:00 AM
+// Integration tests for the VisuaLoom back-end API
+// Tests critical routes for GET and POST of Users, Artworks, and Likes
+
+
+
 const { test, expect, beforeAll, beforeEach } = require('@jest/globals');
 const axios = require('axios');
 
 
-// integration tests for the VisuaLoom back end tests
-// critical routes for GET and POST of Users and Artworks,
-// as well as POST of Likes.
-
-
+// ---------------------- Test Setup ----------------------
+/**
+ * Sets up the API client for the tests.
+ * Initializes axios with base URL and headers for the requests.
+ */
 let apiClient;
 
+
+/**
+ * Resets the database before each test to ensure test isolation.
+ * Sends a request to the '/admin/resetdb' route to clear any existing data.
+ */
 beforeAll(() => {
     // Initialize the client
     apiClient = axios.create({
@@ -26,6 +38,11 @@ beforeEach(async () => {
     const response = await apiClient.get('/admin/resetdb');
 })
 
+
+/**
+ * Test the 'CREATE /users' route to ensure a new user is created successfully.
+ * Verifies that the returned user matches the input data.
+ */
 test('CREATE /users should return the created user', async () => {
 
     // Arrange
@@ -46,6 +63,10 @@ test('CREATE /users should return the created user', async () => {
 });
 
 
+/**
+ * Test the 'GET /users/:id' route to ensure it returns the correct user by ID.
+ * Verifies the user data matches the expected values.
+ */
 test('GET /user:id should return the user with that id', async () => {
     // Arrange
     const response_post = await apiClient.post(`/users`, {
@@ -66,6 +87,11 @@ test('GET /user:id should return the user with that id', async () => {
     expect(response_get.data.name).toEqual("Test User");
 });
 
+
+/**
+ * Test the 'CREATE /artworks' route to ensure a new artwork is created successfully.
+ * Verifies that the artwork data matches the input data, including properly formatted JSON fields.
+ */
 test('CREATE /artwork should return the created artwork', async () => {
     // Arrange
     const response_user_post = await apiClient.post(`/users`, {
@@ -100,6 +126,10 @@ test('CREATE /artwork should return the created artwork', async () => {
 })
 
 
+/**
+ * Test the 'GET /artworks/:id' route to ensure it returns the correct artwork by ID.
+ * Verifies the artwork data matches the expected values, including proper JSON field formatting.
+ */
 test('GET /artwork/:id should return the artwork with id', async () => {
 
     // Arrange
@@ -138,6 +168,11 @@ test('GET /artwork/:id should return the artwork with id', async () => {
     );
 })
 
+
+/**
+ * Test the 'POST /likes' route to ensure a new like is created successfully.
+ * Verifies that the like data matches the input data.
+ */
 test('POST /like should return the created like', async () => {
     // Arrange
     const response_user_post = await apiClient.post(`/users`, {

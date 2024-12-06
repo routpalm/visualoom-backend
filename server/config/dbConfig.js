@@ -1,22 +1,18 @@
 // ./server/config/dbConfig.js
 
-
-// This file is used by setSequelize to connect to the correct
-// database. If the NODE_ENV environment variable is set to
-// 'production', it will connect to the live production data-
-// base. Otherwise, it will attempt to connect to a locally
-// hosted database configured according to README.md. Different
-// connection options are needed since the prouction database
-// requires SSL, while the local database does not support it.
+// Author - Brett DeWitt
+// Created - Saturday, November 9, 2024, 1:30:03 PM
+// Provides configuration for connecting to the PostgreSQL database based on the environment (development, production, test)
+// Dynamically adjusts the connection options for production, development, and test environments (e.g., SSL for production)
 
 
-// Generates config dynamically based on environment
-//   - PROD: heroku requires SSL
-//   - DEV : local postgres does not support SSL
-//   - TEST: docker postgres does not support SSL
+// ---------------------- Database Configuration ----------------------
+/**
+ * Generates the configuration object for Sequelize database connection based on the current environment.
+ * - For production, SSL is enabled to meet Heroku's requirements.
+ * - For development and test environments, SSL is disabled since local and test databases do not require SSL.
+ */
 const dbConfig = () => {
-    const isProduction = process.env.NODE_ENV === 'production';
-    const isTest = process.env.NODE_ENV === 'test';
 
     return {
         dialect: 'postgres',
@@ -28,4 +24,6 @@ const dbConfig = () => {
     };
 };
 
+
+// Export the database configuration
 module.exports = dbConfig;

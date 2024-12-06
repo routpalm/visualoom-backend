@@ -1,12 +1,26 @@
 // ./server/controllers/likesController.js
 
+// Author - Brett DeWitt
+// Created - Saturday, November 9, 2024, 1:30:03 PM
+// Provides logic for '/likes' endpoint in the application
+// Handles creating, fetching, modifying, and deleting likes, as well as fetching associated user and artwork data
 
-// Provides logic for '/likes' endpoint
 
-
+// ---------------------- Import Models ----------------------
+/**
+ * Import the Like, User, and Artwork models for interacting with the database.
+ * @module models
+ */
 const { Like, User, Artwork } = require('../models');
 
-// Gets 'limit' number of most recent likes starting with 'offset'
+
+// ---------------------- Get Likes ----------------------
+/**
+ * Handler to fetch a list of likes with pagination support.
+ * Fetches likes based on query parameters 'limit' and 'offset'.
+ * @param {Object} req - The request object containing 'limit' and 'offset' query parameters.
+ * @param {Object} res - The response object that will contain the list of likes or an error message.
+ */
 exports.getLikes = async (req, res) => {
     try {
 
@@ -39,7 +53,13 @@ exports.getLikes = async (req, res) => {
     }
 }
 
-// Gets like with the specified id
+
+// ---------------------- Get Like by ID ----------------------
+/**
+ * Handler to fetch a like by its ID.
+ * @param {Object} req - The request object containing the like ID as a parameter.
+ * @param {Object} res - The response object that will contain the like data or an error message.
+ */
 exports.getLikeById = async (req, res) => {
     try {
         const { id } = req.params;
@@ -62,7 +82,13 @@ exports.getLikeById = async (req, res) => {
     }
 }
 
-// Get the user associated with the like
+
+// ---------------------- Get Like User ----------------------
+/**
+ * Handler to fetch the user associated with a like.
+ * @param {Object} req - The request object containing the like ID as a parameter.
+ * @param {Object} res - The response object that will contain the user associated with the like or an error message.
+ */
 exports.getLikeUser = async (req, res) => {
     try {
         const { id } = req.params;
@@ -80,7 +106,13 @@ exports.getLikeUser = async (req, res) => {
     }
 }
 
-// Get the artwork associated with the like
+
+// ---------------------- Get Like Artwork ----------------------
+/**
+ * Handler to fetch the artwork associated with a like.
+ * @param {Object} req - The request object containing the like ID as a parameter.
+ * @param {Object} res - The response object that will contain the artwork associated with the like or an error message.
+ */
 exports.getLikeArtwork = async (req, res) => {
     try {
         const { id } = req.params;
@@ -98,7 +130,13 @@ exports.getLikeArtwork = async (req, res) => {
     }
 }
 
-// Create a new like with fields 'user' and 'artwork'
+
+// ---------------------- Create Like ----------------------
+/**
+ * Handler to create a new like.
+ * @param {Object} req - The request object containing the userId and artworkId for the new like.
+ * @param {Object} res - The response object that will contain the created like or an error message.
+ */
 exports.createLike = async (req, res) => {
     try {
         const { userId, artworkId } = req.body;
@@ -112,7 +150,13 @@ exports.createLike = async (req, res) => {
     }
 }
 
-// Modify like fields 'userId' and 'artworkId'
+
+// ---------------------- Modify Like ----------------------
+/**
+ * Handler to modify the userId and artworkId of an existing like.
+ * @param {Object} req - The request object containing the like ID as a parameter and the new userId and artworkId in the body.
+ * @param {Object} res - The response object that will contain the modified like or an error message.
+ */
 exports.modifyLike = async (req, res) => {
     try {
         const { id } = req.params;
@@ -129,7 +173,13 @@ exports.modifyLike = async (req, res) => {
     }
 }
 
-// Delete like with the specified 'id'
+
+// ---------------------- Delete Like ----------------------
+/**
+ * Handler to delete a like by its ID.
+ * @param {Object} req - The request object containing the like ID as a parameter.
+ * @param {Object} res - The response object that will indicate the success or failure of the deletion.
+ */
 exports.deleteLike = async (req, res) => {
     try {
         const { id } = req.params;
